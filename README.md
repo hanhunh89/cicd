@@ -29,7 +29,9 @@ CI/CD를 이용하면 이런 비참한 현실을 막을 수 있다.<br>
    배포를 해버렷! 지시를 하면 gitlab에서 배포서버의 runner에게 https 프로토콜을 이용하여 지시를 한다.<br>
    runner의 default 포트는 443이다. <br>
    다른 프로세스(apache, nginx, etc)가 443을 사용하면 포트를 변경해야 한다.    
-4. 배포서버에서 .gitlab-ci.yml에 정의된 동작을 시행한다. <br>
+4. runner는 배포서버에서 .gitlab-ci.yml에 정의된 동작을 시행한다. <br>
+   .gitlab-ci.yml은 gitlab 프로젝트 최상위 폴더에 위치한다.<br>
+   이 파일에는 빌드, 테스트, 배포 명령어가 명시되어있다. 
 
 ## 이 포스트에서 하는일
 1. gitlab 프로젝트를 생성한다.
