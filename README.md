@@ -53,7 +53,7 @@ https://docs.gitlab.com/runner/install/linux-repository.html 를 참조하여 �
 
 
 
-# gitlab에서 runner 등록(register)<br>
+## gitlab에서 runner 등록(register)<br>
    runner는 소스코드가 배포될 서버에서 동작한다. gitlab에서 배포 명령을 받으면 사용자가 정의한 명령어를 실행하는 역할을 한다.<br>
    
    ### 먼저 runner 등록을 위한 정보가 필요하다. gitlab에서 생성한 프로젝트를 클릭해보자.
@@ -76,16 +76,16 @@ https://docs.gitlab.com/runner/install/linux-repository.html 를 참조하여 �
 
    ### 생성된 token 값을 메모장에 복사해 놓는다. 서버에서 runner를 등록할 때 필요하다. <br>
 
-# 서버에 gitlab repository 추가
+## 서버에 gitlab repository 추가
    서버에 runner를 설치하기 위해 repository를 등록한다. 
 ```
 curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
 ```
-# 서버에 gitlab runner install
+## 서버에 gitlab runner install
 ```
 sudo apt-get install gitlab-runner
 ```
-# runner 등록
+## runner 등록
 ```
 sudo gitlab-runner register
 ```
@@ -106,7 +106,7 @@ excutor의 종류를 입력한다. shell을 입력하면 된다.
 Enter an executor: custom, docker, docker-windows, ssh, kubernetes, parallels, shell, virtualbox, docker-autoscaler, docker+machine, instance:
 ```
 
-# 이제 runner가 등록되었다. <br>
+## 이제 runner가 등록되었다. <br>
 
 ### 다시 프로젝트 - setting -ci/cd - runner로 들어가면 새로운 runner가 등록된것을 볼 수 있다.<br>
 ### 여기서 "Enable shared runners for this project"를 비활성화한다.
@@ -115,3 +115,49 @@ Enter an executor: custom, docker, docker-windows, ssh, kubernetes, parallels, s
 ### runner를 클릭하면 runner가 동작하는 서버의 ip주소를 확인할 수 있다. 
 ![이미지 대체 텍스트](7.jpg)
 
+
+# .gitlab-ci.yml 파일 작성
+프로젝트 최상위 위치에 .gitlab-ci.yml 파일을 다음과 같이 생성한다. 
+```
+build-job:
+  stage: build
+  script:
+    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - mkdir target
+    - mvn clean install
+    - pwd
+    - mv ./target/*.war ~/miniboard.war
+test-job1:
+  stage: test
+  script:
+    - echo "This job tests something"
+
+test-job2:
+  stage: test
+  script:
+    - echo "This job tests something, but takes more time than test-job1."
+    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
+    - echo "which simulates a test that runs 20 seconds longer than test-job1"
+    - sleep 3
+
+deploy-prod:
+  stage: deploy
+  script:
+    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
+    - pwd
+    - sudo mv ~/*.war /var/lib/tomcat9/webapps
+    - sudo service tomcat9 restart
+  environment: production
+```
+build, test, deploy 를 거치면서 입력한 명령어를 수행한다. 
+이제 프로젝트에서 commit을 실행하면 자동으로 배포를 시행한다. 
+
+# 배포상태 확인하기
+### 프로젝트 클릭-좌측화면 build - pipelines를 클릭하면 배포 상태를 볼 수 있다.<br>
+![이미지 대체 텍스트](8.jpg)
+
+### "passed"를 클릭하면 배포를 단계별로 볼 수 있고, 개별 단계를 독립적으로 시행할 수도 있다.
+![이미지 대체 텍스트](9.jpg)
+
+### 각 배포 단계를 클릭하면, .gitlab-ci.yml 파일에서 정의된 명령어의 결과를 볼 수 있다.
+![이미지 대체 텍스트](10.jpg)
