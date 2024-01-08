@@ -59,6 +59,7 @@ https://docs.gitlab.com/runner/install/linux-repository.html 를 참조하여 �
    ### 먼저 runner 등록을 위한 정보가 필요하다. gitlab에서 생성한 프로젝트를 클릭해보자.
    ![이미지 대체 텍스트](2.jpg)
 
+
    ### 좌측 "setting"에 마우스 오버 후 "CI/CD"를 클릭한다.
 
    ![이미지 대체 텍스트](3.jpg)
