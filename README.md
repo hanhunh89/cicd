@@ -21,7 +21,8 @@ gitlab의 CI/CD 기능을 살펴보자. <br>
 CI/CD를 이용하면 이런 비참한 현실을 막을 수 있다.<br>
 
 ## 환경
-google cloud platform E2 server(Debian GNU/Linux 11 (bullseye))
+google cloud platform E2 server(Debian GNU/Linux 11 (bullseye))<br>
+readme.md를 똑같이 따라하기 전에 이 프로젝트에 있는 파일을 새로 생성한 gitlab의 프로젝트에 넣어야 한다.
 
 ## gitlab CI/CD 작동 원리
 1. gitlab 프로젝트에서 소스코드를 수정 후 commit을 한다.
