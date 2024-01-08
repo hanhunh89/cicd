@@ -20,6 +20,8 @@ gitlab의 CI/CD 기능을 살펴보자. <br>
 
 CI/CD를 이용하면 이런 비참한 현실을 막을 수 있다.<br>
 
+## 환경
+google cloud platform E2 server(Debian GNU/Linux 11 (bullseye))
 
 ## gitlab CI/CD 작동 원리
 1. gitlab 프로젝트에서 소스코드를 수정 후 commit을 한다.
@@ -40,4 +42,66 @@ CI/CD를 이용하면 이런 비참한 현실을 막을 수 있다.<br>
 4. 실제 배포를 하면서 변화를 관찰한다.
 
 ## gitlab 프로젝트 생성
+![이미지 대체 텍스트](1.jpg)
+1. gitlab에서 "new project"를 클릭하여 새로운 프로젝트 생성
+2. "create blank project" 클릭
+3. project name 입력하고 "create project" 클릭
+4. 해당 프로젝트에 소스코드 업로드
+
+## 배포서버 runner 설치
+https://docs.gitlab.com/runner/install/linux-repository.html 를 참조하여 작성하였다.
+
+1. gitlab repository 추가
+```
+curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+```
+
+2. gitlab runner install
+```
+sudo apt-get install gitlab-runner
+```
+
+3. runner 등록(register)<br>
+   runner는 소스코드가 배포될 서버에서 동작한다. gitlab에서 배포 명령을 받으면 사용자가 정의한 명령어를 실행하는 역할을 한다.<br>
+   
+   먼저 runner 등록을 위한 정보가 필요하다. gitlab에서 생성한 프로젝트를 클릭해보자.
+   ![이미지 대체 텍스트](2.jpg)
+   좌측 "setting"에 마우스 오버 후 "CI/CD"를 클릭한다.
+   ![이미지 대체 텍스트](3.jpg)
+   runner 우측의 "expand" 클릭 후 "new project runner" 를 클릭한다.
+   ![이미지 대체 텍스트](4.jpg)
+   다른 설정은 그대로 두고 tag 이름을 입력한다. "run untagged jobs" 항목을 클릭하면 tag를 생략할 수 있다.<br>
+   이 포스트에서는 tag를 생략하겠다. 이후 "create runner"를 클릭한다.
+   ![이미지 대체 텍스트](5.jpg)
+   생성된 token 값을 메모장에 복사해 놓는다. 서버에서 runner를 등록할 때 필요하다. <br>
+
+   이제 서버에서 runner를 등록해보자
+```
+sudo gitlab-runner register
+```
+아래와 같은 창이 뜨면 "https://gitlab.com/"을 입력한다. 
+```
+Enter the GitLab instance URL (for example, https://gitlab.com/):
+```
+token 값을 입력하라고 뜬다. 메모장에 복사해놓은 token 값을 입력한다. 
+```
+Enter the registration token:
+```
+runner의 name을 입력한다. 
+```
+Enter a name for the runner. This is stored only in the local config.toml file
+```
+excutor의 종류를 입력한다. shell을 입력하면 된다.
+```
+Enter an executor: custom, docker, docker-windows, ssh, kubernetes, parallels, shell, virtualbox, docker-autoscaler, docker+machine, instance:
+```
+
+이제 runner가 등록되었다. <br>
+
+다시 프로젝트 -setting -ci/cd - runner로 들어가면 새로운 runner가 등록된것을 볼 수 있다.<br>
+여기서 "Enable shared runners for this project"를 비활성화한다.
+![이미지 대체 텍스트](6.jpg)
+
+runner를 클릭하면 runner가 동작하는 서버의 ip주소를 확인할 수 있다. 
+![이미지 대체 텍스트](7.jpg)
 
