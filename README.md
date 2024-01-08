@@ -42,7 +42,7 @@ google cloud platform E2 server(Debian GNU/Linux 11 (bullseye))
 4. 실제 배포를 하면서 변화를 관찰한다.
 
 # gitlab 프로젝트 생성
-![이미지 대체 텍스트](1.jpg)
+![이미지 대체 텍스트](i/1.jpg)
 1. gitlab에서 "new project"를 클릭하여 새로운 프로젝트 생성
 2. "create blank project" 클릭
 3. project name 입력하고 "create project" 클릭
@@ -57,22 +57,22 @@ https://docs.gitlab.com/runner/install/linux-repository.html 를 참조하여 �
    runner는 소스코드가 배포될 서버에서 동작한다. gitlab에서 배포 명령을 받으면 사용자가 정의한 명령어를 실행하는 역할을 한다.<br>
    
    ### 먼저 runner 등록을 위한 정보가 필요하다. gitlab에서 생성한 프로젝트를 클릭해보자.
-   ![이미지 대체 텍스트](2.jpg)
+   ![이미지 대체 텍스트](i/2.jpg)
 
 
    ### 좌측 "setting"에 마우스 오버 후 "CI/CD"를 클릭한다.
 
-   ![이미지 대체 텍스트](3.jpg)
+   ![이미지 대체 텍스트](i/3.jpg)
 
    ### runner 우측의 "expand" 클릭 후 "new project runner" 를 클릭한다.
 
-   ![이미지 대체 텍스트](4.jpg)
+   ![이미지 대체 텍스트](i/4.jpg)
 
    ### 다른 설정은 그대로 두고 tag 이름을 입력한다. "run untagged jobs" 항목을 클릭하면 tag를 생략할 수 있다.<br>
 
    ### 이 포스트에서는 tag를 생략하겠다. 이후 "create runner"를 클릭한다.
 
-   ![이미지 대체 텍스트](5.jpg)
+   ![이미지 대체 텍스트](i/5.jpg)
 
    ### 생성된 token 값을 메모장에 복사해 놓는다. 서버에서 runner를 등록할 때 필요하다. <br>
 
@@ -110,10 +110,10 @@ Enter an executor: custom, docker, docker-windows, ssh, kubernetes, parallels, s
 
 ### 다시 프로젝트 - setting -ci/cd - runner로 들어가면 새로운 runner가 등록된것을 볼 수 있다.<br>
 ### 여기서 "Enable shared runners for this project"를 비활성화한다.
-![이미지 대체 텍스트](6.jpg)
+![이미지 대체 텍스트](i/6.jpg)
 
 ### runner를 클릭하면 runner가 동작하는 서버의 ip주소를 확인할 수 있다. 
-![이미지 대체 텍스트](7.jpg)
+![이미지 대체 텍스트](i/7.jpg)
 
 
 # .gitlab-ci.yml 파일 작성
@@ -154,13 +154,13 @@ build, test, deploy 를 거치면서 입력한 명령어를 수행한다.
 
 # 배포상태 확인하기
 ### 프로젝트 클릭-좌측화면 build - pipelines를 클릭하면 배포 상태를 볼 수 있다.<br>
-![이미지 대체 텍스트](8.jpg)
+![이미지 대체 텍스트](i/8.jpg)
 
 ### "passed"를 클릭하면 배포를 단계별로 볼 수 있고, 개별 단계를 독립적으로 시행할 수도 있다.
-![이미지 대체 텍스트](9.jpg)
+![이미지 대체 텍스트](i/9.jpg)
 
 ### 각 배포 단계를 클릭하면, .gitlab-ci.yml 파일에서 정의된 명령어의 결과를 볼 수 있다.
-![이미지 대체 텍스트](10.jpg)
+![이미지 대체 텍스트](i/10.jpg)
 
 
 # 마치며
