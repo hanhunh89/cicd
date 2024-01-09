@@ -30,8 +30,6 @@ readme.md를 똑같이 따라하기 전에 이 프로젝트에 있는 파일을 
    이 때, 1번을 생략하고 수동으로 배포할 수 있다.<br>
    배포 서버에는 runner가 프로세스 형태로 동작하고 있다.<br>
    배포를 해버렷! 지시를 하면 gitlab에서 배포서버의 runner에게 https 프로토콜을 이용하여 지시를 한다.<br>
-   runner의 default 포트는 443이다. <br>
-   다른 프로세스(apache, nginx, etc)가 443을 사용하면 포트를 변경해야 한다.    
 4. runner는 배포서버에서 .gitlab-ci.yml에 정의된 동작을 시행한다. <br>
    .gitlab-ci.yml은 gitlab 프로젝트 최상위 폴더에 위치한다.<br>
    이 파일에는 빌드, 테스트, 배포 명령어가 명시되어있다. 
